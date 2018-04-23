@@ -17,10 +17,18 @@
        ((equal (car lst) (cadr lst)) (cons (car lst) (task (cddr lst))))
        (t (cons (car lst) (task (cdr lst))))))
 
-(print(task '(3 3 2 2 1 1 2 )))
+;(print(task '(3 3 2 2 1 1 2 )))
+;(3 2 1 2)
 
+(defun task (lst)
+ ((lambda(x y)(cond ((null y) lst)
+       ((equal x (cadr lst)) (cons x (task (cddr lst))))
+       (t (cons x (task y))))) (car lst)(cdr lst)))
 
+;(print(task '(3 3 3  1 1 2 2 2 )))
+;(3 3 1 2 2)
 
+;16)Определите функцию, добавляющую элементы одного списка во второй список, начиная с заданной позиции.
 
 ;17) Создайте предикат, порождающий всевозможные перестановки исходного множества.
 
@@ -34,8 +42,8 @@
      (t (apply 'append (mapcar (lambda (x) (insert (car lst) nil x)) (rotate (cdr lst)))))))
 
 
-(print(rotate '(a b c )))
-
+;(print(rotate '(a b c )))
+;((A B C) (B A C) (B C A) (A C B) (C A B) (C B A)) 
 
 ;29)Определите функцию, вычисляющую глубину списка (самой глубокой ветви).
 
@@ -70,37 +78,45 @@
 
 ;36. Определите предикат НЕПЕРЕСЕКАЮЩИЕСЯ, проверяющий, что два множества не пересекаются, т.е. у них нет общих элементов.
 
-(defun in-predicate (a l)
-
-    (cond
-
-        ((null l) nil) ; элемент не может принадлежать пустому множеству
-
-        ((eq a (car l)) t) ; элемент принадлежит множеству, если в нем содержится
-
-        (t (in-predicate a (cdr l))) ; продолжаем проверку
-
-    )
-
-)
-
 (defun intersection1 (a b)
 
-    (cond
+    ((lambda(x)(cond
 
         ((null a) nil)
 
         ((null b) nil)
 
-        ((in-predicate (car a) b) (print `(peresecenie)) nil ) ;(cons (car a) (intersection~ (cdr a) b)
+        ((in-predicate x b) (cons x (intersection1 (cdr a) b)) )
 
-        (t (intersection1 (cdr a) b))
+        (t (intersection1 (cdr a) b)))
 
-    )
-
+    )(car a))
 )
 
-(print(intersection1 '(d l e) '(b c d) ))
+(defun NOintersection (a b)
+	 (cond
+		((null (intersection1 a b)) T)
+		(t nill)
+	)
+)
+
+;(print(intersection1 '(d l e) '(b c d) ))
+; (D) 
+
+;(print(intersection1 '(a l e) '(b c d) ))
+; NIL 
+
+(defun NOintersection (a b)
+	 (cond
+		((null (intersection1 a b)) T)
+		(t nill)
+	)
+) 
+;(print(NOintersection '(d l e) '(b c d) ))
+; NILL
+
+;(print(NOintersection '(a l e) '(b c d) ))
+; T
 
 
 ;38. Определите функцию ОБЪЕДИНЕНИЕ, формирующую объединение двух множеств
@@ -110,11 +126,10 @@
 
     (cond
 
-        ((null l) nil) ; элемент не может принадлежать пустому множеству
+        ((null l) nil) 
+        ((eq a (car l)) t) 
 
-        ((eq a (car l)) t) ; элемент принадлежит множеству, если в нем содержится
-
-        (t (in-predicate a (cdr l))) ; продолжаем проверку
+        (t (in-predicate a (cdr l))) 
 
     )
 
@@ -122,17 +137,24 @@
 
 (defun union1 (a b)
 
-    (cond ((null a) b)
+    ((lambda(x )(cond ((null a) b)
 
         ((null b) a)
 
-        ((in-predicate (car a) b) (union1 (cdr a) b) )
+        ((in-predicate x b)  )
 
-        (t (cons (car a) (union1 (cdr a) b)))
+        (t (cons x (union1 (cdr a) b)))
 
     )
 
+    ) (car a))
 )
+ 
+;(print(union1 '(a b c) 'nil))
+;(A B C)
 
- (union1 '(a b c) 'nil)
+
+;46)Предположим, что отец и мать некоторого лица, хранятся как значения соответствующих свойств у символа, обозначающего это лицо. Напишите функ-цию (РОДИТЕЛИ x), которая возвращает в качестве значения родителей, и предика (СЕСТРЫ-БРАТЬЯ x1 x2), который истинен в случае, если x1 и x2 — сестры или братья, родные или с одним общим родителем
+
+
 
