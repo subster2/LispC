@@ -169,3 +169,16 @@
 
 
 
+;КР
+(defun task (lst)
+ (let* ((l1 (remove-if 'atom lst))
+        (max (apply 'max (mapcar 'length l1))))
+  (remove-if (lambda (x) (< (length x) max)) l1)))
+
+;(print(task '(A B  (B C) (A B C) (D E) (R))))
+;((A B C))
+;(print(task '(A B  (B C) (A B) (D E) (R))))
+;((B C) (A B) (D E)) 
+
+
+
