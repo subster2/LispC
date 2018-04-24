@@ -30,6 +30,17 @@
 
 ;16)Определите функцию, добавляющую элементы одного списка во второй список, начиная с заданной позиции.
 
+
+(defun task (lst n s)
+ (cond  ((equal 0 n) (cons s lst))
+        ((>= n (length lst)) nil)
+        (t (append (subseq lst 0 n) (list s) (subseq lst n)))))
+
+;(print (task '(1 2 3 4) 0 '(a b c)))
+;((A B C) 1 2 3 4)
+;(print (task '(1 2) 3 '(a b c)))
+;NIL
+
 ;17) Создайте предикат, порождающий всевозможные перестановки исходного множества.
 
 (defun insert (a l r)
