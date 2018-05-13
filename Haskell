@@ -1,0 +1,25 @@
+-- Содержится ли первый аргумент в списке, заданным вторым
+ 
+memb :: (Eq a) => a -> [a] -> Bool
+memb x [] = False
+memb x (y:ys) = if (y == x) then True else memb x ys
+ 
+-- Построить множество элементов (удалить повторяющиеся)
+ 
+setof :: (Eq a) => [a] -> [a]
+setof [] = []
+setof (x:xs) = if memb x (setof xs) then setof xs else x:(setof xs)
+ 
+-- Объединить два множества
+ 
+unite :: (Eq a) => [a] -> [a] -> [a]
+unite x y = setof (x++y)
+ 
+-- Пересечение двух множеств
+ 
+inter :: (Eq a) => [a] -> [a] -> [a]
+inter x [] = []
+inter [] y = []
+inter (x:xs) y = setof (if memb x y then x:(inter xs y) else (inter xs y))
+
+main = print $ (inter [])
